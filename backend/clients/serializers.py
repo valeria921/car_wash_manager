@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.relations import PrimaryKeyRelatedField
 
 from clients.models import ClientB2C, ClientB2B, ClientB2BServiceCommission, ClientB2CServiceCommission
+from services.models import Service
 from services.serializers import ServiceReadSerializer
 
 
@@ -15,7 +16,7 @@ class ClientB2CSerializer(serializers.ModelSerializer):
 class ClientB2BSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClientB2B
-        fields = ['company_name', 'company_address', 'company_code', 'compony_phone']
+        fields = ['company_name', 'company_address', 'company_code', 'company_phone']
         read_only_fields = ['created_at', 'updated_at']
 
 
@@ -30,8 +31,8 @@ class ClientB2CServiceCommissionReadSerializer(serializers.ModelSerializer):
 
 
 class ClientB2CServiceCommissionWriteSerializer(serializers.ModelSerializer):
-    client_b2c = PrimaryKeyRelatedField(read_only=True)
-    service = PrimaryKeyRelatedField(read_only=True)
+    client_b2c = PrimaryKeyRelatedField(queryset=ClientB2C.objects.all())
+    service = PrimaryKeyRelatedField(queryset=Service.objects.all())
 
     class Meta:
         model = ClientB2CServiceCommission
@@ -50,8 +51,8 @@ class ClientB2BServiceCommissionReadSerializer (serializers.ModelSerializer):
 
 
 class ClientB2BServiceCommissionWriteSerializer(serializers.ModelSerializer):
-    client_b2b = PrimaryKeyRelatedField(read_only=True)
-    service = PrimaryKeyRelatedField(read_only=True)
+    client_b2b = PrimaryKeyRelatedField(queryset=ClientB2B.objects.all())
+    service = PrimaryKeyRelatedField(queryset=Service.objects.all())
 
     class Meta:
         model = ClientB2BServiceCommission

@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.timezone import now
+from backend import settings
 
 
 class TimeStampedModel(models.Model):
@@ -18,10 +18,16 @@ class Skill(TimeStampedModel):
 
 
 class Worker(TimeStampedModel):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        related_name='worker_profile',
+        null=True,
+        blank=True)
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
-    phone = models.CharField(max_length=100, blank=True, default='')
+    phone = models.CharField(max_length=100, blank=True)
     start_date = models.DateField(blank=True, null=True)
     skills = models.ManyToManyField(Skill)
 
