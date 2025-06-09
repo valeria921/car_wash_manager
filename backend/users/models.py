@@ -1,18 +1,14 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin
+from django.utils import timezone
+from users.constants import UserRole
 from users.managers import UserCustomManager
-
-
-class UserRole(models.TextChoices):
-    OWNER = 'owner', 'Owner'
-    MANAGER = 'manager', 'Manager'
-    WORKER = 'worker', 'Worker'
 
 
 class UserCustomProfile(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-    role = models.CharField(max_length=20, choices=UserRole.choices, default=UserRole.WORKER)
+    role = models.CharField(max_length=20, choices=UserRole.CHOICES, default=UserRole.WORKER)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

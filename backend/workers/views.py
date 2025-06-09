@@ -1,10 +1,11 @@
+from rest_framework.decorators import action
+from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-
 from users.permissions import IsOwner, IsSelfOrOwner, IsManagerOrOwner
 from workers.models import Skill, Worker
 from workers.serializers import SkillSerializer, WorkerReadSerializer, WorkerWriteSerializer
-
 
 class SkillViewSet(ModelViewSet):
     queryset = Skill.objects.all()
@@ -16,7 +17,8 @@ class WorkerViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
-        if self.action in ['list', 'retrieve']:
+        print(f"Action: {self.action}")
+        if self.action in ['list', 'retrieve', 'me']:
             return WorkerReadSerializer
         return WorkerWriteSerializer
 
@@ -25,9 +27,20 @@ class WorkerViewSet(ModelViewSet):
             return [IsAuthenticated(), IsOwner()]
         elif self.action in ['list', 'update', 'partial_update']:
             return [IsAuthenticated(), IsManagerOrOwner()]
-        elif self.action == ['retrieve']:
+        elif self.action == 'retrieve':
             return [IsAuthenticated(), IsSelfOrOwner]
+        elif self.action == 'me':
+            return [IsAuthenticated()]
         return [IsAuthenticated()]
+
+    @action(detail=False, methods=['get'], url_path='me', permission_classes=[IsAuthenticated])
+    def me(self, request):
+        try:
+            worker = Worker.objects.get(user=request.user)
+        except Worker.DoesNotExist:
+            raise NotFound("Worker profile not found.")
+        serializer = self.get_serializer(worker)
+        return Response(serializer.data)
 
 
 # # Skill views

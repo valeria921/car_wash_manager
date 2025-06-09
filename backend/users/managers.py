@@ -1,6 +1,6 @@
 from django.contrib.auth.models import BaseUserManager
 from django.utils.translation import gettext_lazy as _
-from users.models import UserRole
+from users.constants import UserRole
 
 
 class UserCustomManager(BaseUserManager):

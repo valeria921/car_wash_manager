@@ -29,7 +29,7 @@ class Worker(TimeStampedModel):
     is_active = models.BooleanField(default=True)
     phone = models.CharField(max_length=100, blank=True)
     start_date = models.DateField(blank=True, null=True)
-    skills = models.ManyToManyField(Skill)
+    skills = models.ManyToManyField(Skill, related_name='workers')
 
 
     def __str__(self):

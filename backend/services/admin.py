@@ -3,7 +3,7 @@ from services.models import Service, ServiceType
 
 
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('service_name', 'service_type')
+    list_display = ('id','service_name', 'service_type')
 
 class ServiceTypeAdmin(admin.ModelAdmin):
     list_display = ('service_type_name',)

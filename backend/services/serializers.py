@@ -9,7 +9,7 @@ from workers.serializers import SkillSerializer
 class ServiceTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceType
-        fields = ['service_type_name']
+        fields = ['id','service_type_name']
         read_only_fields = ['created_at', 'updated_at']
 
 #Serializer with read_only service_type, for GET
@@ -19,7 +19,7 @@ class ServiceReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Service
-        fields = ['service_name', 'service_type', 'default_commission_percentage', 'required_skills']
+        fields = ['id','service_name', 'service_type', 'default_commission_percentage', 'required_skills']
         read_only_fields = ['created_at', 'updated_at']
 
 
@@ -29,5 +29,5 @@ class ServiceWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Service
-        fields = ['service_name', 'service_type', 'default_commission_percentage', 'required_skills']
+        fields = ['id', 'service_name', 'service_type', 'default_commission_percentage', 'required_skills']
         read_only_fields = ['created_at', 'updated_at']
