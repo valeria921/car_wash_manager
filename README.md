@@ -5,7 +5,11 @@
 In progress...
 This Django-based Car Wash Management System is designed to help car wash business owners manage workers, services, costs, and differentiate between B2C (retail clients) and B2B (business clients) workflows. The system supports multiple user roles and permissions.
 
-## 🔧 Tech Stack
+## 🔧 Tech Stack (Current & Planned)
+- Backend: Python, Django, Django REST Framework
+- Frontend: React.js, Bootstrap, HTML, CSS
+- Database: PostgreSQL
+- Containerization: Docker & Docker Compose
 
 ## 🚀 Current & Planned Features
 - Manage workers, orders, clients efficiently
