@@ -1,11 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { ROLES, STORAGE_KEYS } from "../constants";
+import { useDispatch } from "react-redux";
+import { authActions } from "../redux/actions";
 
 function DashboardPage() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const role = localStorage.getItem(STORAGE_KEYS.ROLE);
 
     const handleLogout = () => {
+        console.log("1 = LOGOUT STARTED");
+        dispatch(authActions.logout());
+        navigate("/login");
+        return;
         localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
         localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
         localStorage.removeItem(STORAGE_KEYS.ROLE);

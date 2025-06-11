@@ -1,43 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { STORAGE_KEYS } from "../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../redux/actions";
 
 function LoginPage() {
+    const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const auth = useSelector((state) => state.auth);
 
-    const handleSubmit = async (e) => {
+    if (auth.role) {
+        console.log("4 - EVERYTHING IS DONE WE HAVE DATA");
+        console.log(auth);
+    }
+
+    useEffect(() => {
+        if (auth.userId) {
+            navigate("/dashboard");
+        }
+    }, [auth?.userId]);
+
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        try {
-            const response = await fetch("http://localhost:8000/api/token/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, data.access);
-                localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, data.refresh);
-                localStorage.setItem(STORAGE_KEYS.USER_ID, data.user_id);
-                localStorage.setItem(STORAGE_KEYS.ROLE, data.role);
-
-                navigate("/dashboard");
-            } else {
-                alert("Login failed: " + (data.detail || "Unknown error"));
-            }
-        } catch (error) {
-            alert("Error connecting to backend");
-        }
+        dispatch(authActions.login(email, password));
     };
 
     return (
-        <div>
+        <div className="container my-4">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <input

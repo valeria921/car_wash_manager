@@ -5,7 +5,7 @@ const FormCheckBoxes = ({ name, values = [], onChange, options }) => {
     console.log(options);
     return (
         <>
-            {options.map((opt, index) => (
+            {options?.map((opt, index) => (
                 <label key={index} style={{ display: "block", margin: "4px 0" }}>
                     <input
                         type="checkbox"

@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROLES, STORAGE_KEYS } from "../constants";
-import { servicesApi, skillsApi, workersApi } from "../apis";
 import TableBasic from "../components/tables/TableBasic";
 import CreateUpdateForm, { INPUT_TYPES } from "../components/forms/CreateUpdateForm";
+import { useDispatch, useSelector } from "react-redux";
+import { skillsActions } from "../redux/actions";
 
 function SkillsPage() {
-    const [skills, setSkills] = useState([]);
+    const dispatch = useDispatch();
+    const skills = useSelector((state) => state.skills.skills);
     const navigate = useNavigate();
     const userRole = localStorage.getItem(STORAGE_KEYS.ROLE);
     const [formMode, setFormMode] = useState(null);
     const [selectedSkill, setSelectedSkill] = useState(null);
 
     useEffect(() => {
-        skillsApi.fetchSkills().then((res) => {
-            setSkills(res.data);
-        });
+        dispatch(skillsActions.getSkills());
     }, []);
 
     const handleNewSkill = () => {
@@ -31,13 +31,7 @@ function SkillsPage() {
     const handleDelete = async (skillId) => {
         const confirmed = window.confirm("Are you sure you want to delete this skill?");
         if (!confirmed) return;
-
-        try {
-            await skillsApi.deleteSkill(skillId);
-            setSkills((prev) => prev.filter((skill) => skill.id !== skillId));
-        } catch (err) {
-            console.error("Error deleting skill:", err);
-        }
+        dispatch(skillsActions.deleteSkill(skillId));
     };
 
     const handleBack = () => {
@@ -52,18 +46,15 @@ function SkillsPage() {
     const handleFormSubmit = async (data) => {
         try {
             if (formMode === "create") {
-                await skillsApi.createSkill({
-                    ...data,
-                });
+                dispatch(skillsActions.createSkill(data));
             } else if (formMode === "edit") {
-                await skillsApi.updateSkill({
-                    ...data,
-                    id: selectedSkill.id,
-                });
+                dispatch(
+                    skillsActions.updateSkill({
+                        ...data,
+                        id: selectedSkill.id,
+                    }),
+                );
             }
-
-            const updated = await skillsApi.fetchSkills();
-            setSkills(updated.data);
             setFormMode(null);
             setSelectedSkill(null);
         } catch (err) {
@@ -116,7 +107,7 @@ function SkillsPage() {
     }
 
     return (
-        <div>
+        <div className="container my-4">
             <TableBasic
                 tableName="All skills"
                 columnNames={[{ name: "Skill name" }, { name: "Actions" }]}

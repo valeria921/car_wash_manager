@@ -4,35 +4,48 @@ import { ROLES, STORAGE_KEYS } from "../constants";
 import { servicesApi, skillsApi } from "../apis";
 import TableBasic from "../components/tables/TableBasic";
 import CreateUpdateForm, { INPUT_TYPES } from "../components/forms/CreateUpdateForm";
+import { useDispatch, useSelector } from "react-redux";
+import { servicesActions, skillsActions } from "../redux/actions";
 
 function ServicesPage() {
-    const [services, setServices] = useState([]);
+    const dispatch = useDispatch();
+    const services = useSelector((state) => state.services.services);
+    const skills = useSelector((state) => state.skills.skills);
+    // const [services, setServices] = useState([]);
     const [serviceTypes, setServiceTypes] = useState([]);
-    const [skills, setSkills] = useState([]);
+    // const [skills, setSkills] = useState([]);
     const [formMode, setFormMode] = useState(null);
     const [selectedService, setSelectedService] = useState(null);
     const navigate = useNavigate();
     const userRole = localStorage.getItem(STORAGE_KEYS.ROLE);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [servicesRes, serviceTypesRes, skillsRes] = await Promise.all([
-                    servicesApi.fetchServices(),
-                    servicesApi.fetchServiceTypes(),
-                    skillsApi.fetchSkills(),
-                ]);
-                setServices(servicesRes.data);
-                setServiceTypes(serviceTypesRes.data);
-                setSkills(skillsRes.data);
-                console.log(skillsRes.data);
-            } catch (err) {
-                console.error("Error loading data:", err);
-            }
-        };
-
-        fetchData();
+        dispatch(servicesActions.getServices());
     }, []);
+
+    useEffect(() => {
+        dispatch(skillsActions.getSkills());
+    }, []);
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const [servicesRes, serviceTypesRes, skillsRes] = await Promise.all([
+    //                 servicesApi.fetchServices(),
+    //                 servicesApi.fetchServiceTypes(),
+    //                 skillsApi.fetchSkills(),
+    //             ]);
+    //             setServices(servicesRes.data);
+    //             setServiceTypes(serviceTypesRes.data);
+    //             setSkills(skillsRes.data);
+    //             console.log(skillsRes.data);
+    //         } catch (err) {
+    //             console.error("Error loading data:", err);
+    //         }
+    //     };
+    //
+    //     fetchData();
+    // }, []);
 
     const handleNewService = () => {
         setFormMode("create");
@@ -47,13 +60,7 @@ function ServicesPage() {
     const handleDelete = async (serviceId) => {
         const confirmed = window.confirm("Are you sure you want to delete this service?");
         if (!confirmed) return;
-
-        try {
-            await servicesApi.deleteService(serviceId);
-            setServices((prev) => prev.filter((service) => service.id !== serviceId));
-        } catch (err) {
-            console.error("Error deleting service:", err);
-        }
+        dispatch(servicesActions.deleteService(serviceId));
     };
 
     const handleBack = () => {
@@ -68,18 +75,15 @@ function ServicesPage() {
     const handleFormSubmit = async (data) => {
         try {
             if (formMode === "create") {
-                await servicesApi.createService({
-                    ...data,
-                });
+                dispatch(servicesActions.createService(data));
             } else if (formMode === "edit") {
-                await servicesApi.updateService({
-                    ...data,
-                    id: selectedService.id,
-                });
+                dispatch(
+                    servicesActions.updateService({
+                        ...data,
+                        id: selectedService.id,
+                    }),
+                );
             }
-
-            const updated = await servicesApi.fetchServices();
-            setServices(updated.data);
             setFormMode(null);
             setSelectedService(null);
         } catch (err) {
@@ -124,7 +128,7 @@ function ServicesPage() {
     }
 
     function convertSelectedServiceToFormValues() {
-        console.log(services);
+        console.log(selectedService);
         return [
             {
                 label: "Service name",

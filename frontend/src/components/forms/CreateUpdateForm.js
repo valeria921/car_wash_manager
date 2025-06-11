@@ -1,7 +1,6 @@
 import { FormInput, FormRadioButtons, FormSelect } from "./formFields";
 import { useEffect, useState } from "react";
 import FormCheckBoxes from "./formFields/FormCheckBoxes";
-import Button from "bootstrap/js/src/button";
 import ButtonBasic from "../buttons/ButtonBasic";
 
 export const INPUT_TYPES = {
