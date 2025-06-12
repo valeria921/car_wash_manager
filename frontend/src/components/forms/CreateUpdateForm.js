@@ -1,7 +1,6 @@
-import { FormInput, FormRadioButtons, FormSelect } from "./formFields";
+import { FormInput, FormRadioButtons } from "./formFields";
 import { useEffect, useState } from "react";
 import FormCheckBoxes from "./formFields/FormCheckBoxes";
-import ButtonBasic from "../buttons/ButtonBasic";
 
 export const INPUT_TYPES = {
     textInput: 1,
@@ -49,7 +48,7 @@ const CreateUpdateForm = ({
 
     useEffect(() => {
         initialiseDefaultValues();
-    }, []);
+    }, [formValues]);
 
     function initialiseDefaultValues() {
         const initialValues = formValues.map((each) => {
@@ -133,8 +132,12 @@ const CreateUpdateForm = ({
         <div>
             {formValues.map((eachFormValue, index) => renderInput(eachFormValue, index))}
             <div>
-                <ButtonBasic onClick={prepareDataBeforeSubmit}>Update</ButtonBasic>
-                <ButtonBasic onClick={onCancel}>Cancel</ButtonBasic>
+                <button className="btn btn-success mt-3 me-3" onClick={prepareDataBeforeSubmit}>
+                    Save
+                </button>
+                <button className="btn btn-danger mt-3" onClick={onCancel}>
+                    Cancel
+                </button>
             </div>
         </div>
     );

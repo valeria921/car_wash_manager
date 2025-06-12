@@ -28,8 +28,7 @@ function* createService(action) {
 
 function* deleteService(action) {
     try {
-        const response = yield call(servicesApi.deleteService, action.payload);
-        console.log(response.data);
+        yield call(servicesApi.deleteService, action.payload);
         yield put(servicesActions.getServices());
     } catch (e) {}
 }

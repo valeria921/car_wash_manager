@@ -16,11 +16,6 @@ export const fetchServices = () => {
             headers: authHeaders(),
         });
     },
-    fetchServiceTypes = () => {
-        return axios.get(BASE_URL + "service_types/", {
-            headers: authHeaders(),
-        });
-    },
     createService = (serviceData) => {
         return axios.post(`${BASE_URL}services/`, serviceData, {
             headers: {
@@ -31,6 +26,33 @@ export const fetchServices = () => {
     },
     updateService = (service) => {
         return axios.put(`${BASE_URL}services/${service.id}/`, service, {
+            headers: {
+                ...authHeaders(),
+                "Content-Type": "application/json",
+            },
+        });
+    },
+    fetchServiceTypes = () => {
+        return axios.get(BASE_URL + "service_types/", {
+            headers: authHeaders(),
+        });
+    },
+    deleteServiceType = (serviceTypeId) => {
+        console.log(serviceTypeId);
+        return axios.delete(`${BASE_URL}service_types/${serviceTypeId}/`, {
+            headers: authHeaders(),
+        });
+    },
+    createServiceType = (serviceTypeData) => {
+        return axios.post(`${BASE_URL}service_types/`, serviceTypeData, {
+            headers: {
+                ...authHeaders(),
+                "Content-Type": "application/json",
+            },
+        });
+    },
+    updateServiceType = (serviceType) => {
+        return axios.put(`${BASE_URL}service_types/${serviceType.id}/`, serviceType, {
             headers: {
                 ...authHeaders(),
                 "Content-Type": "application/json",

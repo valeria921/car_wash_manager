@@ -1,4 +1,3 @@
-import { ROLES } from "../../constants";
 import React from "react";
 
 const TableBasic = ({
@@ -36,22 +35,23 @@ const TableBasic = ({
                 <table className="table table-striped table-hover">
                     <thead className="table-dark">
                         <tr>
-                            {columnNames.map((eachRow) => {
-                                return <th>{eachRow.name}</th>;
+                            {columnNames.map((eachRow, index) => {
+                                return <th key={index}>{eachRow.name}</th>;
                             })}
                         </tr>
                     </thead>
                     <tbody>
-                        {rows.map((eachColumn) => {
+                        {rows.map((eachColumn, index) => {
                             return (
-                                <tr>
+                                <tr key={index}>
                                     {rowKeysToRender.map((eachKey) => {
-                                        return <td>{eachColumn[eachKey]}</td>;
+                                        return <td key={eachKey}>{eachColumn[eachKey]}</td>;
                                     })}
                                     <td>
-                                        {eachColumn.buttons?.map((eachButton) => {
+                                        {eachColumn.buttons?.map((eachButton, index) => {
                                             return (
                                                 <button
+                                                    key={index}
                                                     className={eachButton.className}
                                                     onClick={eachButton.onClick}
                                                 >
