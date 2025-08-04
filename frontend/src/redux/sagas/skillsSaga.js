@@ -15,7 +15,6 @@ function* getSkills() {
 function* updateSkill(action) {
     try {
         const response = yield call(skillsApi.updateSkill, action.payload);
-        console.log(response.data);
         yield put(skillsActions.getSkills());
     } catch (e) {}
 }
@@ -23,7 +22,6 @@ function* updateSkill(action) {
 function* createSkill(action) {
     try {
         const response = yield call(skillsApi.createSkill, action.payload);
-        console.log(response.data);
         yield put(skillsActions.getSkills());
     } catch (e) {}
 }
@@ -31,7 +29,6 @@ function* createSkill(action) {
 function* deleteSkill(action) {
     try {
         const response = yield call(skillsApi.deleteSkill, action.payload);
-        console.log(response.data);
         yield put(skillsActions.getSkills());
     } catch (e) {}
 }

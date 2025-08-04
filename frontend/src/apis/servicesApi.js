@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 import { BASE_URL, STORAGE_KEYS } from "../constants";
 
 const authHeaders = () => ({
@@ -6,18 +6,18 @@ const authHeaders = () => ({
 });
 
 export const fetchServices = () => {
-        return axios.get(BASE_URL + "services/", {
+        return axiosInstance.get(BASE_URL + "services/", {
             headers: authHeaders(),
         });
     },
     deleteService = (serviceId) => {
         console.log(serviceId);
-        return axios.delete(`${BASE_URL}services/${serviceId}/`, {
+        return axiosInstance.delete(`${BASE_URL}services/${serviceId}/`, {
             headers: authHeaders(),
         });
     },
     createService = (serviceData) => {
-        return axios.post(`${BASE_URL}services/`, serviceData, {
+        return axiosInstance.post(`${BASE_URL}services/`, serviceData, {
             headers: {
                 ...authHeaders(),
                 "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export const fetchServices = () => {
         });
     },
     updateService = (service) => {
-        return axios.put(`${BASE_URL}services/${service.id}/`, service, {
+        return axiosInstance.put(`${BASE_URL}services/${service.id}/`, service, {
             headers: {
                 ...authHeaders(),
                 "Content-Type": "application/json",
@@ -33,18 +33,18 @@ export const fetchServices = () => {
         });
     },
     fetchServiceTypes = () => {
-        return axios.get(BASE_URL + "service_types/", {
+        return axiosInstance.get(BASE_URL + "service_types/", {
             headers: authHeaders(),
         });
     },
     deleteServiceType = (serviceTypeId) => {
         console.log(serviceTypeId);
-        return axios.delete(`${BASE_URL}service_types/${serviceTypeId}/`, {
+        return axiosInstance.delete(`${BASE_URL}service_types/${serviceTypeId}/`, {
             headers: authHeaders(),
         });
     },
     createServiceType = (serviceTypeData) => {
-        return axios.post(`${BASE_URL}service_types/`, serviceTypeData, {
+        return axiosInstance.post(`${BASE_URL}service_types/`, serviceTypeData, {
             headers: {
                 ...authHeaders(),
                 "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export const fetchServices = () => {
         });
     },
     updateServiceType = (serviceType) => {
-        return axios.put(`${BASE_URL}service_types/${serviceType.id}/`, serviceType, {
+        return axiosInstance.put(`${BASE_URL}service_types/${serviceType.id}/`, serviceType, {
             headers: {
                 ...authHeaders(),
                 "Content-Type": "application/json",

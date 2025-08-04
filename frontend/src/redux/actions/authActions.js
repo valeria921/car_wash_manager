@@ -28,3 +28,12 @@ export function logout() {
         type: $.LOGOUT,
     };
 }
+
+export function setTokens(accessToken, refreshToken){
+    return {
+        type: $.SET_TOKENS,
+        payload: {
+            accessToken, refreshToken
+        }
+    }
+}

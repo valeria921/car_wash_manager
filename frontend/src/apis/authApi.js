@@ -1,8 +1,7 @@
-import axios from "axios";
-import { BASE_URL, STORAGE_KEYS } from "../constants";
+import axiosInstance from "./axiosInstance";
 
 export function login(email, password) {
-    return axios.post(BASE_URL + "token/", {
+    return axiosInstance.post("token/", {
         email,
         password,
     });

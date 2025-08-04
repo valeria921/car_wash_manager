@@ -41,6 +41,13 @@ const authReducer = (state = initialState, action) => {
                 ...initialState,
             };
         }
+        case $.SET_TOKENS:{
+            return {
+                ...state,
+                accessToken: action.payload.accessToken,
+                refreshToken: action.payload.refreshToken
+            }
+        }
         default:
             return state;
     }

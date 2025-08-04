@@ -5,7 +5,6 @@ import { servicesApi } from "../../apis";
 function* getServices() {
     try {
         const response = yield call(servicesApi.fetchServices);
-        console.log(response.data);
         yield put(servicesActions.getServicesCompleted(response.data));
     } catch (e) {}
 }
@@ -13,7 +12,6 @@ function* getServices() {
 function* updateService(action) {
     try {
         const response = yield call(servicesApi.updateService, action.payload);
-        console.log(response.data);
         yield put(servicesActions.getServices());
     } catch (e) {}
 }
@@ -21,7 +19,6 @@ function* updateService(action) {
 function* createService(action) {
     try {
         const response = yield call(servicesApi.createService, action.payload);
-        console.log(response.data);
         yield put(servicesActions.getServices());
     } catch (e) {}
 }

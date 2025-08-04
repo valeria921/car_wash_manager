@@ -2,6 +2,8 @@ export const LOGIN = "LOGIN";
 export const LOGIN_COMPLETED = "LOGIN_COMPLETED";
 export const LOGOUT = "LOGOUT";
 
+export const SET_TOKENS = 'SET_TOKENS'
+
 export const GET_SKILLS = "GET_SKILLS";
 export const GET_SKILLS_COMPLETED = "GET_SKILLS_COMPLETED";
 export const UPDATE_SKILL = "UPDATE_SKILL";

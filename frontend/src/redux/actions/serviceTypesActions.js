@@ -6,10 +6,10 @@ export function getServiceTypes() {
     };
 }
 
-export function getServiceTypesCompleted(services) {
+export function getServiceTypesCompleted(serviceTypes) {
     return {
         type: $.GET_SERVICE_TYPES_COMPLETED,
-        payload: services,
+        payload: serviceTypes,
     };
 }
 
@@ -27,9 +27,9 @@ export function createServiceType(data) {
     };
 }
 
-export function deleteServiceType(serviceId) {
+export function deleteServiceType(serviceTypeId) {
     return {
         type: $.DELETE_SERVICE_TYPE,
-        payload: serviceId,
+        payload: serviceTypeId,
     };
 }

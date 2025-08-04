@@ -7,11 +7,8 @@ function* login(action) {
         const email = action.payload.email;
         const password = action.payload.password;
 
-        console.log("1 - LOGIN INSIDE SAGA STARTED");
-
         const response = yield call(authApi.login, email, password);
         const data = response.data;
-        console.log("2 - LOGIN DONE, SENDING DATA TO REDUCER");
 
         yield put(
             authActions.loginCompleted(

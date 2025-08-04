@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 import { BASE_URL, STORAGE_KEYS } from "../constants";
 
 const authHeaders = () => ({
@@ -6,17 +6,17 @@ const authHeaders = () => ({
 });
 
 export const fetchWorkers = () => {
-        return axios.get(BASE_URL + "workers", {
+        return axiosInstance.get(BASE_URL + "workers", {
             headers: authHeaders(),
         });
     },
     deleteWorker = (workerId) => {
-        return axios.delete(`${BASE_URL}workers/${workerId}/`, {
+        return axiosInstance.delete(`${BASE_URL}workers/${workerId}/`, {
             headers: authHeaders(),
         });
     },
     createWorker = (workerData) => {
-        return axios.post(`${BASE_URL}workers/`, workerData, {
+        return axiosInstance.post(`${BASE_URL}workers/`, workerData, {
             headers: {
                 ...authHeaders(),
                 "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export const fetchWorkers = () => {
         });
     },
     updateWorker = (worker) => {
-        return axios.put(`${BASE_URL}workers/${worker.id}/`, worker, {
+        return axiosInstance.put(`${BASE_URL}workers/${worker.id}/`, worker, {
             headers: {
                 ...authHeaders(),
                 "Content-Type": "application/json",
