@@ -14,7 +14,7 @@ class TimeStampedModel(models.Model):
 class ClientB2C(TimeStampedModel):
     client_name = models.CharField(max_length=255, default='client b2c')
     client_phone = models.CharField(max_length=100, blank=True)
-    # client_commission_percentage = models.DecimalField(max_digits=5, decimal_places=2)
+    client_commission_percentage = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
         return self.client_name
@@ -22,9 +22,10 @@ class ClientB2C(TimeStampedModel):
 
 class ClientB2B(TimeStampedModel):
     company_name = models.CharField(max_length=255)
-    company_address = models.TextField(blank=True)
     company_code = models.CharField(blank=True,)
     company_phone = models.CharField(blank=True,)
+    company_address_1 = models.TextField(null=True, blank=True)
+    company_address_2 = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.company_name
