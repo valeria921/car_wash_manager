@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'orders',
     'services',
     'users',
+    'salaries',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -68,11 +69,8 @@ REST_FRAMEWORK = {
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=90),
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=15),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'AUTH_HEADER_TYPES': ('Bearer',),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
 }
 
 ROOT_URLCONF = 'backend.urls'
