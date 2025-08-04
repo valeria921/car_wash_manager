@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from rest_framework.relations import PrimaryKeyRelatedField
-
 from services.models import ServiceType, Service
 from workers.models import Skill
 from workers.serializers import SkillSerializer
