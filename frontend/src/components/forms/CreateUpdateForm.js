@@ -1,11 +1,13 @@
 import { FormInput, FormRadioButtons } from "./formFields";
 import { useEffect, useState } from "react";
 import FormCheckBoxes from "./formFields/FormCheckBoxes";
+import FormDatePicker from "./formFields/FormDatePicker";
 
 export const INPUT_TYPES = {
     textInput: 1,
     radioInput: 2,
     checkBoxInput: 3,
+    datePicker: 4,
 };
 
 const CreateUpdateForm = ({
@@ -101,6 +103,16 @@ const CreateUpdateForm = ({
                 case INPUT_TYPES.checkBoxInput: {
                     return (
                         <FormCheckBoxes
+                            values={values[index]}
+                            name={eachFormValue.label}
+                            options={eachFormValue.options}
+                            onChange={(e) => handleOnChange(e, eachFormValue.type, index)}
+                        />
+                    );
+                }
+                case INPUT_TYPES.datePicker: {
+                    return (
+                        <FormDatePicker
                             values={values[index]}
                             name={eachFormValue.label}
                             options={eachFormValue.options}

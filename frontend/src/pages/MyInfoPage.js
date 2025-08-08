@@ -37,6 +37,9 @@ function MyInfoPage() {
 
     return (
         <div>
+            <button className="btn btn-outline-secondary mb-3" onClick={handleBack}>
+                ← Back
+            </button>
             <h2>My Info</h2>
             <p>
                 Name: {myInfo.name} {myInfo.surname}
@@ -49,9 +52,6 @@ function MyInfoPage() {
                     ? myInfo.skills.map((skill) => skill.skill_name).join(", ")
                     : "No skills listed"}
             </p>
-            <button onClick={handleBack} style={{ marginTop: "20px" }}>
-                ← Back
-            </button>
         </div>
     );
 }

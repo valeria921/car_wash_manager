@@ -5,12 +5,14 @@ import TableBasic from "../components/tables/TableBasic";
 import CreateUpdateForm, { INPUT_TYPES } from "../components/forms/CreateUpdateForm";
 import { useDispatch, useSelector } from "react-redux";
 import { servicesActions, serviceTypesActions, skillsActions } from "../redux/actions";
+import TableWithUpdate from "../components/tables/TableWithUpdate";
+import FormDatePicker from "../components/forms/formFields/FormDatePicker";
 
 const FORM_MODES = {
-    CREATE_SERVICE: "CREATE SERVICE",
-    EDIT_SERVICE: "EDIT SERVICE",
-    CREATE_SERVICE_TYPE: "CREATE SERVICE TYPE",
-    EDIT_SERVICE_TYPE: "EDIT SERVICE_TYPE",
+    CREATE_SERVICE: "CREATE_SERVICE",
+    EDIT_SERVICE: "EDIT_SERVICE",
+    CREATE_SERVICE_TYPE: "CREATE_SERVICE_TYPE",
+    EDIT_SERVICE_TYPE: "EDIT_SERVICE_TYPE",
 };
 
 function ServicesPage() {
@@ -57,7 +59,8 @@ function ServicesPage() {
 
     const handleUpdateServiceType = (serviceTypeId) => {
         const found = serviceTypes.find((s) => s.id === serviceTypeId);
-        setSelectedService(found);
+        console.log(found);
+        setSelectedServiceType(found);
         setFormMode(FORM_MODES.EDIT_SERVICE_TYPE);
     };
 
@@ -95,11 +98,11 @@ function ServicesPage() {
         }
     };
 
-    const handleServiceTypeFormSubmit = async (data) => {
+    const handleServiceTypeFormSubmit = (data) => {
         try {
             if (formMode === FORM_MODES.CREATE_SERVICE_TYPE) {
                 dispatch(serviceTypesActions.createServiceType(data));
-            } else if (formMode === formMode.EDIT_SERVICE_TYPE) {
+            } else if (formMode === FORM_MODES.EDIT_SERVICE_TYPE) {
                 dispatch(
                     serviceTypesActions.updateServiceType({
                         ...data,
@@ -112,6 +115,14 @@ function ServicesPage() {
         } catch (err) {
             console.error("Error submitting form:", err);
         }
+    };
+
+    const handleServiceTypeUpdate = (data) => {
+        dispatch(
+            serviceTypesActions.updateServiceType({
+                ...data,
+            }),
+        );
     };
 
     function getServiceTableRowButtons(serviceId) {
@@ -224,6 +235,7 @@ function ServicesPage() {
     }
 
     function convertSelectedServiceTypeToFormValues() {
+        console.log("SElected Service Type ", selectedServiceType);
         return [
             {
                 label: "Service type name",
@@ -270,6 +282,17 @@ function ServicesPage() {
                 </button>
             )}
 
+            <TableWithUpdate
+                tableName="All service types"
+                columnNames={[{ name: "Service type" }, { name: "Actions" }]}
+                rows={getServiceTypeModifiedTableData()}
+                rowKeysToRender={["service_type_name"]}
+                rowsToEdit={[{ name: "service_type_name" }]}
+                onSubmit={(data) => {
+                    handleServiceTypeUpdate(data);
+                }}
+                onDelete={(id) => handleDeleteServiceType(id)}
+            />
             <TableBasic
                 tableName="All service types"
                 columnNames={[{ name: "Service type" }, { name: "Actions" }]}
@@ -290,6 +313,8 @@ function ServicesPage() {
                     + New service type
                 </button>
             )}
+
+            <FormDatePicker />
         </div>
     );
 }

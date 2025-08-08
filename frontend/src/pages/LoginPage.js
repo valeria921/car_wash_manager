@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../redux/actions";
+import colorPallet from "../assets/colorPallet";
+import ButtonBasic from "../components/buttons/ButtonBasic";
 
 function LoginPage() {
     const dispatch = useDispatch();
@@ -28,27 +30,40 @@ function LoginPage() {
     };
 
     return (
-        <div className="container my-4">
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <br />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <br />
-                <button type="submit">Login</button>
-            </form>
+        <div className="flex-grow-1 d-flex align-items-center justify-content-center">
+            <div
+                style={{ backgroundColor: colorPallet.navyBlue }}
+                className="p-5 text-center rounded col-lg-6 col-xl-5"
+            >
+                <h1 className="text-light text-center mb-4">Login to the manager</h1>
+                <form onSubmit={handleSubmit}>
+                    <div className=" mb-3 ">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className=" mb-3 ">
+                        <input
+                            type="password"
+                            className="form-control"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <ButtonBasic
+                        buttonType="buttonSuccess"
+                        extraClasses="mb-3"
+                        type="submit"
+                    >Login</ButtonBasic>
+                </form>
+            </div>
         </div>
     );
 }

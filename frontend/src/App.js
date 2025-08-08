@@ -4,88 +4,118 @@ import DashboardPage from "./pages/DashboardPage";
 import WorkersPage from "./pages/WorkersPage";
 import MyInfoPage from "./pages/MyInfoPage";
 import StartPage from "./pages/StartPage";
-import NewWorkerPage from "./pages/NewWorkerPage";
 import { ROLES, STORAGE_KEYS } from "./constants";
 import SkillsPage from "./pages/SkillsPage";
 import ServicesPage from "./pages/ServicesPage";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import "./assets/style.css";
+import SideNavBar from "./components/SideNavBar";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { authActions } from "./redux/actions";
 
 function PrivateRoute({ pageToShow, allowedRoles }) {
     const isAuthenticated = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
     const userRole = localStorage.getItem(STORAGE_KEYS.ROLE);
-    console.log("Is Auth", isAuthenticated);
 
     if (!isAuthenticated) {
         return <Navigate to="/login" />;
     }
 
-    console.log("Allowed roles", allowedRoles);
     if (allowedRoles) {
-        console.log("Inside");
         const isAllowed = allowedRoles.includes(userRole);
         if (!isAllowed) {
             return <Navigate to="/dashboard" />;
         }
     }
 
-    console.log("Element returned");
     return pageToShow;
 }
 
 function App() {
+    const dispatch = useDispatch();
+    const hasAccessToken = useSelector((state) => state.auth.accessToken);
+
+    useEffect(() => {
+        checkLocalStorageKeys();
+    }, []);
+
+    // To sync tokens for both localStorage and redux we need to do this.
+    // Because when page is refreshed data in redux is gone(cuz its stored in RAM)
+    function checkLocalStorageKeys() {
+        const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
+        const refreshToken = localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN);
+        if (accessToken) {
+            dispatch(authActions.setTokens(accessToken, refreshToken));
+        }
+    }
+
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<StartPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route
-                    path="/dashboard"
-                    element={<PrivateRoute pageToShow={<DashboardPage />} />}
-                />
-                <Route
-                    path="/workers"
-                    element={
-                        <PrivateRoute
-                            allowedRoles={[ROLES.MANAGER, ROLES.OWNER]}
-                            pageToShow={<WorkersPage />}
-                        />
-                    }
-                />
-                <Route path="/my-info" element={<PrivateRoute pageToShow={<MyInfoPage />} />} />
-                <Route
-                    path="/workers/new"
-                    element={
-                        <PrivateRoute allowedRoles={[ROLES.OWNER]} pageToShow={<NewWorkerPage />} />
-                    }
-                />
-                <Route
-                    path="/skills"
-                    element={
-                        <PrivateRoute
-                            allowedRoles={[ROLES.OWNER, ROLES.MANAGER]}
-                            pageToShow={<SkillsPage />}
-                        />
-                    }
-                />
-                <Route
-                    path="/services"
-                    element={
-                        <PrivateRoute
-                            allowedRoles={[ROLES.OWNER, ROLES.MANAGER]}
-                            pageToShow={<ServicesPage />}
-                        />
-                    }
-                />
-                {/*<Route*/}
-                {/*    path="/service_types"*/}
-                {/*    elements={*/}
-                {/*        <PrivateRoute*/}
-                {/*            allowedRoles={[ROLES.OWNER, ROLES.MANAGER]}*/}
-                {/*            pageToShow={<ServiceTypesPage />}*/}
-                {/*        />*/}
-                {/*    }*/}
-                {/*/>*/}
-            </Routes>
-        </Router>
+        <>
+            <div className="app-shell">
+                <Router>
+                    {!hasAccessToken && <Header />}
+                    <main
+                        className="main-content"
+                        style={{ flex: 1, display: "flex", flexDirection: "row" }}
+                    >
+                        {hasAccessToken && <SideNavBar />}
+                        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+                            <Routes>
+                                <Route path="/" element={<StartPage />} />
+                                <Route path="/login" element={<LoginPage />} />
+                                <Route
+                                    path="/dashboard"
+                                    element={<PrivateRoute pageToShow={<DashboardPage />} />}
+                                />
+                                <Route
+                                    path="/workers"
+                                    element={
+                                        <PrivateRoute
+                                            allowedRoles={[ROLES.MANAGER, ROLES.OWNER]}
+                                            pageToShow={<WorkersPage />}
+                                        />
+                                    }
+                                />
+                                <Route
+                                    path="/my-info"
+                                    element={<PrivateRoute pageToShow={<MyInfoPage />} />}
+                                />
+                                <Route
+                                    path="/skills"
+                                    element={
+                                        <PrivateRoute
+                                            allowedRoles={[ROLES.OWNER, ROLES.MANAGER]}
+                                            pageToShow={<SkillsPage />}
+                                        />
+                                    }
+                                />
+                                <Route
+                                    path="/services"
+                                    element={
+                                        <PrivateRoute
+                                            allowedRoles={[ROLES.OWNER, ROLES.MANAGER]}
+                                            pageToShow={<ServicesPage />}
+                                        />
+                                    }
+                                />
+                                {/*<Route*/}
+                                {/*    path="/service_types"*/}
+                                {/*    elements={*/}
+                                {/*        <PrivateRoute*/}
+                                {/*            allowedRoles={[ROLES.OWNER, ROLES.MANAGER]}*/}
+                                {/*            pageToShow={<ServiceTypesPage />}*/}
+                                {/*        />*/}
+                                {/*    }*/}
+                                {/*/>*/}
+                            </Routes>
+                        </div>
+                    </main>
+                    {!hasAccessToken && <Footer />}
+                </Router>
+            </div>
+        </>
     );
 }
 

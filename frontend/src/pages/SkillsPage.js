@@ -108,6 +108,9 @@ function SkillsPage() {
 
     return (
         <div className="container my-4">
+            <button className="btn btn-outline-secondary mb-3" onClick={handleBack}>
+                ← Back
+            </button>
             <TableBasic
                 tableName="All skills"
                 columnNames={[{ name: "Skill name" }, { name: "Actions" }]}
@@ -129,10 +132,6 @@ function SkillsPage() {
                     + New skill
                 </button>
             )}
-            <br />
-            <button className="btn btn-outline-secondary mt-3" onClick={handleBack}>
-                ← Back
-            </button>
         </div>
     );
 }

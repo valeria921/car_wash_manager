@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ROLES, STORAGE_KEYS } from "../constants";
 import { useDispatch } from "react-redux";
 import { authActions } from "../redux/actions";
+import ButtonBasic from "../components/buttons/ButtonBasic";
 
 function DashboardPage() {
     const navigate = useNavigate();
@@ -9,24 +10,23 @@ function DashboardPage() {
     const role = localStorage.getItem(STORAGE_KEYS.ROLE);
 
     const handleLogout = () => {
-        console.log("1 = LOGOUT STARTED");
         dispatch(authActions.logout());
-        navigate("/login");
+        navigate("/");
         return;
         localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
         localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
         localStorage.removeItem(STORAGE_KEYS.ROLE);
-        navigate("/login");
+        navigate("/");
     };
 
     function renderRoleButtons() {
         if ([ROLES.OWNER, ROLES.MANAGER].includes(role)) {
             return (
-                <div className="d-flex flex-column align-items-start gap-2 mt-3">
-                    <button onClick={() => navigate("/workers")}>Manage Workers</button>
-                    <button onClick={() => navigate("/skills")}>Manage Skills</button>
-                    <button onClick={() => navigate("/services")}>Manage Services</button>
-                </div>
+                <>
+                    <div>
+                        <ButtonBasic>Manage Workers</ButtonBasic>
+                    </div>
+                </>
             );
         }
         if (role === ROLES.WORKER) {
@@ -35,13 +35,10 @@ function DashboardPage() {
     }
 
     return (
-        <div className="container my-4">
-            <h2>Welcome to the Dashboard! - {role}</h2>
+        <div>
+            <h2>Welcome to Car Wash Manager! - {role}</h2>
             <p>You are now logged in ✅</p>
             {renderRoleButtons()}
-            <button onClick={handleLogout} className="btn btn-outline-secondary mt-3">
-                Log out
-            </button>
         </div>
     );
 }

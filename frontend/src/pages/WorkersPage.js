@@ -7,6 +7,9 @@ import CreateUpdateForm, { INPUT_TYPES } from "../components/forms/CreateUpdateF
 import { useDispatch, useSelector } from "react-redux";
 import { skillsActions, workersActions } from "../redux/actions";
 
+import "../index.css";
+import ButtonBasic from "../components/buttons/ButtonBasic";
+
 function WorkersPage() {
     const dispatch = useDispatch();
     const workers = useSelector((state) => state.workers.workers);
@@ -155,6 +158,9 @@ function WorkersPage() {
 
     return (
         <div className="container my-4">
+            <button className="btn btn-outline-secondary mb-3" onClick={handleBack}>
+                ← Back
+            </button>
             <TableBasic
                 tableName="All Workers"
                 columnNames={[
@@ -178,14 +184,14 @@ function WorkersPage() {
             )}
 
             {userRole === ROLES.OWNER && (
-                <button className="btn btn-success mt-3" onClick={handleNewWorker}>
+                <button
+                    className="btn btn-success mt-3 common-primary-button"
+                    onClick={handleNewWorker}
+                >
                     + New Worker
                 </button>
             )}
-            <br />
-            <button className="btn btn-outline-secondary mt-3" onClick={handleBack}>
-                ← Back
-            </button>
+            <ButtonBasic type={"PRIMARY"} extraStyles={{ marginTop: 5 }} extraClasses={"mt-3"} />
         </div>
     );
 }
