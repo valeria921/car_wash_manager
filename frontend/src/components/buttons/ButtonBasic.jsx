@@ -1,42 +1,37 @@
 import "./styles.css";
-import colorPallet from "../../assets/colorPallet";
 
-const ButtonBasic = ({ buttonType, type, children, onClick, extraClasses, extraStyles }) => {
+export const BUTTON_TYPES = {
+    PRIMARY: "primary",
+    SECONDARY: "secondary",
+    SUCCESS: "success",
+    DANGER: "danger",
+};
+
+const ButtonBasic = ({
+    buttonType = BUTTON_TYPES.PRIMARY,
+    children,
+    onClick,
+    extraClasses,
+    extraStyles,
+}) => {
     function getClassName() {
-        return  "btn mt-3 text-light "
-    }
-
-    function getInlineStyles() {
         switch (buttonType) {
-            case "buttonPrimary":
-                return {
-                    backgroundColor: colorPallet.darkGray,
-                    ...extraStyles,
-                };
-            case "buttonSecondary":
-                return {
-                    backgroundColor: colorPallet.darkGray,
-                    ...extraStyles,
-                };
-            case "buttonSuccess":
-                return {
-                    backgroundColor: colorPallet.green,
-                    ...extraStyles,
-                };
-            case "buttonDanger":
-                return {
-                    backgroundColor: colorPallet.red,
-                    ...extraStyles,
-                };
+            case BUTTON_TYPES.PRIMARY:
+                return "primaryButton";
+            case BUTTON_TYPES.SECONDARY:
+                return "secondaryButton";
+            case BUTTON_TYPES.SUCCESS:
+                return "successButton";
+            case BUTTON_TYPES.DANGER:
+                return "dangerButton";
         }
     }
 
     return (
         <button
-        type={type}
-            style={getInlineStyles()}
-            className={getClassName() + extraClasses}
+            className={"defaultButton " + getClassName() + " " + extraClasses}
             onClick={onClick}
+            style={extraStyles}
         >
             {children}
         </button>

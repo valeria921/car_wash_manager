@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import colorPallet from "../assets/colorPallet";
 
 const Header = () => {
     return (

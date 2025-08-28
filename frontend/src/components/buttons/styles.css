@@ -1,31 +1,53 @@
-
-
-/*.defaultButtonStyle {*/
-/*  background-color: #007bff;*/
-/*  color: white;*/
-/*  border-radius: 50px;*/
-/*  padding: 0.5rem 1.5rem;*/
-/*  font-weight: 500;*/
-/*  transition: all 0.3s ease;*/
-/*}*/
-
-.buttonPrimary {
-
+.defaultButton {
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: #fefcff;
+    font-size: 16px;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
 }
 
-.buttonSecondary {
-
+.primaryButton {
+    background-color: #3678fc;
+    border: 1px solid #1c4daf;
 }
 
-.buttonUpdate {
-  padding: 0.6rem 1.2rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+.primaryButton:hover {
+    background-color: #1c4daf;
 }
 
-.buttonDelete {
-
+.secondaryButton {
+    background-color: #95aab0;
+    border: 1px solid #748589;
 }
 
-.buttonBack {
+.secondaryButton:hover {
+    background-color: #748589;
+}
 
+.successButton {
+    background-color: #038C4C;
+    border: 1px solid #02733E;
+}
+
+.successButton:hover {
+    background-color: #02733E;
+}
+
+.dangerButton {
+    background-color: #d93232;
+    border: 1px solid #ae2424;
+}
+
+.dangerButton:hover {
+    background-color: #ae2424;
+}
+
+.warningButton {
+    background-color: #f27f3d;
+    border: 1px solid #cd5916;
+}
+
+.warningButton:hover {
+    background-color: #cd5916;
 }

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ROLES, STORAGE_KEYS } from "../constants";
-import TableBasic from "../components/tables/TableBasic";
-import CreateUpdateForm, { INPUT_TYPES } from "../components/forms/CreateUpdateForm";
+import { ROLES, STORAGE_KEYS } from "../../constants";
+import TableBasic from "../../components/tables/TableBasic";
+import TableWithUpdate from "../../components/tables/TableWithUpdate";
+import FormDatePicker from "../../components/forms/formFields/FormDatePicker";
+import CreateUpdateForm, { INPUT_TYPES } from "../../components/forms/CreateUpdateForm";
+import ButtonBasic, { BUTTON_TYPES } from "../../components/buttons/ButtonBasic";
 import { useDispatch, useSelector } from "react-redux";
-import { servicesActions, serviceTypesActions, skillsActions } from "../redux/actions";
-import TableWithUpdate from "../components/tables/TableWithUpdate";
-import FormDatePicker from "../components/forms/formFields/FormDatePicker";
+import { servicesActions, serviceTypesActions, skillsActions } from "../../redux/actions";
+import "./style.css";
+import "../main.css";
 
 const FORM_MODES = {
     CREATE_SERVICE: "CREATE_SERVICE",
@@ -70,10 +73,6 @@ function ServicesPage() {
         dispatch(serviceTypesActions.deleteServiceType(serviceTypeId));
     };
 
-    const handleBack = () => {
-        navigate(-1);
-    };
-
     const handleCancelForm = () => {
         setSelectedService(null);
         setFormMode(null);
@@ -130,21 +129,21 @@ function ServicesPage() {
             return [
                 {
                     name: "Update",
-                    className: "btn btn-primary btn-sm me-2",
                     onClick: () => handleUpdateService(serviceId),
+                    buttonType: BUTTON_TYPES.PRIMARY,
                 },
                 {
                     name: "Delete",
-                    className: "btn btn-danger btn-sm",
                     onClick: () => handleDeleteService(serviceId),
+                    buttonType: BUTTON_TYPES.SECONDARY,
                 },
             ];
         }
         return [
             {
                 name: "Update",
-                className: "btn btn-primary btn-sm me-2",
                 onClick: () => handleUpdateService(serviceId),
+                buttonType: BUTTON_TYPES.PRIMARY,
             },
         ];
     }
@@ -154,21 +153,21 @@ function ServicesPage() {
             return [
                 {
                     name: "Update",
-                    className: "btn btn-primary btn-sm me-2",
                     onClick: () => handleUpdateServiceType(serviceTypeId),
+                    buttonType: BUTTON_TYPES.PRIMARY,
                 },
                 {
                     name: "Delete",
-                    className: "btn btn-danger btn-sm",
                     onClick: () => handleDeleteServiceType(serviceTypeId),
+                    buttonType: BUTTON_TYPES.SECONDARY,
                 },
             ];
         }
         return [
             {
                 name: "Update",
-                className: "btn btn-primary btn-sm me-2",
                 onClick: () => handleUpdateServiceType(serviceTypeId),
+                buttonType: BUTTON_TYPES.PRIMARY,
             },
         ];
     }
@@ -247,10 +246,7 @@ function ServicesPage() {
     }
 
     return (
-        <div className="container my-4">
-            <button className="btn btn-outline-secondary mb-3" onClick={handleBack}>
-                ← Back
-            </button>
+        <div class="page-content">
             <TableBasic
                 tableName="All services"
                 columnNames={[
@@ -277,9 +273,13 @@ function ServicesPage() {
                 />
             )}
             {userRole === ROLES.OWNER && (
-                <button className="btn btn-success mt-1 mb-5" onClick={handleNewService}>
+                <ButtonBasic
+                    buttonType={BUTTON_TYPES.SUCCESS}
+                    extraStyles={{ fontSize: "18px" }}
+                    onClick={handleNewService}
+                >
                     + New service
-                </button>
+                </ButtonBasic>
             )}
 
             <TableWithUpdate

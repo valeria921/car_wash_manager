@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ROLES, STORAGE_KEYS } from "../constants";
-import TableBasic from "../components/tables/TableBasic";
-import CreateUpdateForm, { INPUT_TYPES } from "../components/forms/CreateUpdateForm";
+import { ROLES, STORAGE_KEYS } from "../../constants";
+import TableBasic from "../../components/tables/TableBasic";
+import CreateUpdateForm, { INPUT_TYPES } from "../../components/forms/CreateUpdateForm";
 import { useDispatch, useSelector } from "react-redux";
-import { skillsActions } from "../redux/actions";
+import { skillsActions } from "../../redux/actions";
+import "./style.css";
+import "../main.css";
+import ButtonBasic, { BUTTON_TYPES } from "../../components/buttons/ButtonBasic";
 
 function SkillsPage() {
     const dispatch = useDispatch();
@@ -67,21 +70,21 @@ function SkillsPage() {
             return [
                 {
                     name: "Update",
-                    className: "btn btn-primary btn-sm me-2",
                     onClick: () => handleUpdate(skillId),
+                    buttonType: BUTTON_TYPES.PRIMARY,
                 },
                 {
                     name: "Delete",
-                    className: "btn btn-danger btn-sm",
                     onClick: () => handleDelete(skillId),
+                    buttonType: BUTTON_TYPES.SECONDARY,
                 },
             ];
         }
         return [
             {
                 name: "Update",
-                className: "btn btn-primary btn-sm me-2",
                 onClick: () => handleUpdate(skillId),
+                buttonType: BUTTON_TYPES.PRIMARY,
             },
         ];
     }
@@ -107,10 +110,10 @@ function SkillsPage() {
     }
 
     return (
-        <div className="container my-4">
-            <button className="btn btn-outline-secondary mb-3" onClick={handleBack}>
+        <div class="page-content">
+            {/* <button className="btn btn-outline-secondary mb-3" onClick={handleBack}>
                 ← Back
-            </button>
+            </button> */}
             <TableBasic
                 tableName="All skills"
                 columnNames={[{ name: "Skill name" }, { name: "Actions" }]}
@@ -128,9 +131,13 @@ function SkillsPage() {
             )}
 
             {userRole === ROLES.OWNER && (
-                <button className="btn btn-success mt-3" onClick={handleNewSkill}>
+                <ButtonBasic
+                    buttonType={BUTTON_TYPES.SUCCESS}
+                    extraStyles={{ fontSize: "18px" }}
+                    onClick={handleNewSkill}
+                >
                     + New skill
-                </button>
+                </ButtonBasic>
             )}
         </div>
     );

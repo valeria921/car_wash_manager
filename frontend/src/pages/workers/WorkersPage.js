@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ROLES, STORAGE_KEYS } from "../constants";
-import { workersApi } from "../apis";
-import TableBasic from "../components/tables/TableBasic";
-import CreateUpdateForm, { INPUT_TYPES } from "../components/forms/CreateUpdateForm";
+import { ROLES, STORAGE_KEYS } from "../../constants";
+import TableBasic from "../../components/tables/TableBasic";
+import ButtonBasic, { BUTTON_TYPES } from "../../components/buttons/ButtonBasic";
+import CreateUpdateForm, { INPUT_TYPES } from "../../components/forms/CreateUpdateForm";
 import { useDispatch, useSelector } from "react-redux";
-import { skillsActions, workersActions } from "../redux/actions";
+import { skillsActions, workersActions } from "../../redux/actions";
+import "./style.css";
+import "../main.css";
 
-import "../index.css";
-import ButtonBasic from "../components/buttons/ButtonBasic";
 
 function WorkersPage() {
     const dispatch = useDispatch();
     const workers = useSelector((state) => state.workers.workers);
     const skills = useSelector((state) => state.skills.skills);
-    // const [workers, setWorkers] = useState([]);
     const navigate = useNavigate();
     const userRole = localStorage.getItem(STORAGE_KEYS.ROLE);
     const [formMode, setFormMode] = useState(null);
@@ -27,13 +26,6 @@ function WorkersPage() {
     useEffect(() => {
         dispatch(skillsActions.getSkills());
     }, []);
-
-    // useEffect(() => {
-    //     workersApi.fetchWorkers().then((res) => {
-    //         console.log(res.data);
-    //         setWorkers(res.data);
-    //     });
-    // }, []);
 
     const handleNewWorker = () => {
         setFormMode("create");
@@ -49,16 +41,6 @@ function WorkersPage() {
         const confirmed = window.confirm("Are you sure you want to delete this worker?");
         if (!confirmed) return;
         dispatch(workersActions.deleteWorker(workerId));
-        // try {
-        //     await workersApi.deleteWorker(workerId);
-        //     setWorkers((prev) => prev.filter((worker) => worker.id !== workerId));
-        // } catch (err) {
-        //     console.error("Error deleting worker:", err);
-        // }
-    };
-
-    const handleBack = () => {
-        navigate(-1);
     };
 
     const handleCancelForm = () => {
@@ -90,21 +72,21 @@ function WorkersPage() {
             return [
                 {
                     name: "Update",
-                    className: "btn btn-primary btn-sm me-2",
                     onClick: () => handleUpdate(workerId),
+                    buttonType: BUTTON_TYPES.PRIMARY,
                 },
                 {
                     name: "Delete",
-                    className: "btn btn-danger btn-sm",
                     onClick: () => handleDelete(workerId),
+                    buttonType: BUTTON_TYPES.SECONDARY,
                 },
             ];
         }
         return [
             {
                 name: "Update",
-                className: "btn btn-primary btn-sm me-2",
                 onClick: () => handleUpdate(workerId),
+                buttonType: BUTTON_TYPES.PRIMARY,
             },
         ];
     }
@@ -122,8 +104,6 @@ function WorkersPage() {
     }
 
     function convertSelectedWorkerToFormValues() {
-        console.log(workers);
-        console.log(selectedWorker);
         return [
             {
                 label: "Name",
@@ -157,10 +137,7 @@ function WorkersPage() {
     }
 
     return (
-        <div className="container my-4">
-            <button className="btn btn-outline-secondary mb-3" onClick={handleBack}>
-                ← Back
-            </button>
+        <div class="page-content">
             <TableBasic
                 tableName="All Workers"
                 columnNames={[
@@ -184,14 +161,14 @@ function WorkersPage() {
             )}
 
             {userRole === ROLES.OWNER && (
-                <button
-                    className="btn btn-success mt-3 common-primary-button"
-                    onClick={handleNewWorker}
-                >
-                    + New Worker
-                </button>
+                    <ButtonBasic
+                        buttonType={BUTTON_TYPES.SUCCESS}
+                        extraStyles={{ fontSize: "18px" }}
+                        onClick={handleNewWorker}
+                    >
+                        + New Worker
+                    </ButtonBasic>
             )}
-            <ButtonBasic type={"PRIMARY"} extraStyles={{ marginTop: 5 }} extraClasses={"mt-3"} />
         </div>
     );
 }

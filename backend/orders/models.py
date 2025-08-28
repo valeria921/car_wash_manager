@@ -55,8 +55,8 @@ class OrderedServiceByClient(TimeStampedModel):
             return self.custom_commission_percentage
 
         order = self.order
-        client_b2c = order.order_client_b2c
-        client_b2b = order.order_client_b2b
+        client_b2c = order.client_b2c
+        client_b2b = order.client_b2b
 
         if client_b2c:
             # Try to get client-specific commission for B2C

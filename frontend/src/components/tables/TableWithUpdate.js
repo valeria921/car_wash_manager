@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { INPUT_TYPES } from "../forms/CreateUpdateForm";
 import { FormInput } from "../forms/formFields";
+import ButtonBasic from "../buttons/ButtonBasic";
 
 const TableWithUpdate = ({
     tableName,
@@ -152,13 +153,22 @@ const TableWithUpdate = ({
                                     <td>
                                         {getButtons(rowIndex).map((eachButton, index) => {
                                             return (
-                                                <button
-                                                    key={index}
-                                                    className={eachButton.className}
-                                                    onClick={() => eachButton.onClick(rowIndex)}
-                                                >
-                                                    {eachButton.name}
-                                                </button>
+                                                <div>
+                                                    <button
+                                                        key={index}
+                                                        className={eachButton.className}
+                                                        onClick={() => eachButton.onClick(rowIndex)}
+                                                    >
+                                                        {eachButton.name}
+                                                    </button>
+                                                    <ButtonBasic
+                                                        key={index}
+                                                        buttonType={eachButton.buttonType}
+                                                        onClick={eachButton.onClick}
+                                                    >
+                                                        {eachButton.name}
+                                                    </ButtonBasic>
+                                                </div>
                                             );
                                         })}
                                     </td>

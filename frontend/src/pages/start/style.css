@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.introduction {
+    padding: 200px 30px;
+    background-color: fefcff;
+    justify-content: center;
+    align-items: center;
+}
+
+.introduction-block {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap;
+    background-color: #153250;
+    border-radius: 7px;
+    color: #fefcff;
+}
+
+.introduction-block h1 {
+    padding-bottom: 20px;
+    font-size: 40px;
+}
+
+.introduction-block p {
+    padding-bottom: 20px;
+    font-size: 18px;
+    text-align: center;
+}

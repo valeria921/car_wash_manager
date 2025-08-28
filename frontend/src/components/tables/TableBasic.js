@@ -1,4 +1,6 @@
 import React from "react";
+import "./style.css"
+import ButtonBasic from "../buttons/ButtonBasic";
 
 const TableBasic = ({
     tableName,
@@ -28,12 +30,12 @@ const TableBasic = ({
 }) => {
     return (
         <>
-            <div className="d-flex justify-content-between align-items-center mb-3">
+            <div class="table-header">
                 <h2>{tableName}</h2>
             </div>
-            <div className="table-responsive">
-                <table className="table table-striped table-hover">
-                    <thead className="table-dark">
+            <div class="table-container">
+                <table className="custom-table">
+                    <thead className="custom-table__head">
                         <tr>
                             {columnNames.map((eachRow, index) => {
                                 return <th key={index}>{eachRow.name}</th>;
@@ -50,13 +52,13 @@ const TableBasic = ({
                                     <td>
                                         {eachColumn.buttons?.map((eachButton, index) => {
                                             return (
-                                                <button
+                                                <ButtonBasic
                                                     key={index}
-                                                    className={eachButton.className}
+                                                    buttonType={eachButton.buttonType}
                                                     onClick={eachButton.onClick}
                                                 >
                                                     {eachButton.name}
-                                                </button>
+                                                </ButtonBasic>
                                             );
                                         })}
                                     </td>
