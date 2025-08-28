@@ -20,3 +20,10 @@ backend/media/
 backend/staticfiles/
 
 *.log
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
