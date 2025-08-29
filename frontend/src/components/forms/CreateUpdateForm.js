@@ -1,7 +1,12 @@
-import { FormInput, FormRadioButtons } from "./formFields";
 import { useEffect, useState } from "react";
+
+import { FormInput, FormRadioButtons } from "./formFields";
 import FormCheckBoxes from "./formFields/FormCheckBoxes";
 import FormDatePicker from "./formFields/FormDatePicker";
+
+import ButtonBasic, { BUTTON_TYPES } from "../../components/buttons/ButtonBasic";
+
+import "./style.css";
 
 export const INPUT_TYPES = {
     textInput: 1,
@@ -144,12 +149,20 @@ const CreateUpdateForm = ({
         <div>
             {formValues.map((eachFormValue, index) => renderInput(eachFormValue, index))}
             <div>
-                <button className="btn btn-success mt-3 me-3" onClick={prepareDataBeforeSubmit}>
+                <ButtonBasic
+                    buttonType={BUTTON_TYPES.SUCCESS}
+                    extraClasses={"spaceBottom"}
+                    onClick={prepareDataBeforeSubmit}
+                >
                     Save
-                </button>
-                <button className="btn btn-danger mt-3" onClick={onCancel}>
+                </ButtonBasic>
+                <ButtonBasic
+                    buttonType={BUTTON_TYPES.DANGER}
+                    extraClasses={"spaceBottom"}
+                    onClick={onCancel}
+                >
                     Cancel
-                </button>
+                </ButtonBasic>
             </div>
         </div>
     );

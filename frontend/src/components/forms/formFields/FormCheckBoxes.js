@@ -1,4 +1,5 @@
 import React from "react";
+import "./style.css"
 
 const FormCheckBoxes = ({ name, values = [], onChange, options }) => {
     console.log(values);

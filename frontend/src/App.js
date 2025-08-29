@@ -1,19 +1,23 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "./redux/actions";
+import { useEffect } from "react";
+
+import StartPage from "./pages/start/StartPage";
 import LoginPage from "./pages/login/LoginPage";
 import DashboardPage from "./pages/dashboard/DashboardPage";
 import WorkersPage from "./pages/workers/WorkersPage";
 import MyInfoPage from "./pages/MyInfoPage";
-import StartPage from "./pages/start/StartPage";
-import { ROLES, STORAGE_KEYS } from "./constants";
 import SkillsPage from "./pages/skills/SkillsPage";
 import ServicesPage from "./pages/services/ServicesPage";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import "./assets/style.css";
+
 import SideNavBar from "./components/sidebar/SideNavBar";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { authActions } from "./redux/actions";
+import Footer from "./components/footer/Footer";
+import Header from "./components/header/Header";
+
+import { ROLES, STORAGE_KEYS } from "./constants";
+import ClientsPage from "./pages/clients/ClientsPage";
+
 
 function PrivateRoute({ pageToShow, allowedRoles }) {
     const isAuthenticated = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
@@ -53,15 +57,12 @@ function App() {
 
     return (
         <>
-            <div className="app-shell">
+            <div>
                 <Router>
                     {!hasAccessToken && <Header />}
-                    <main
-                        className="main-content"
-                        style={{ flex: 1, display: "flex", flexDirection: "row" }}
-                    >
+                    <main>
                         {hasAccessToken && <SideNavBar />}
-                        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+                        <div>
                             <Routes>
                                 <Route path="/" element={<StartPage />} />
                                 <Route path="/login" element={<LoginPage />} />
@@ -100,15 +101,15 @@ function App() {
                                         />
                                     }
                                 />
-                                {/*<Route*/}
-                                {/*    path="/service_types"*/}
-                                {/*    elements={*/}
-                                {/*        <PrivateRoute*/}
-                                {/*            allowedRoles={[ROLES.OWNER, ROLES.MANAGER]}*/}
-                                {/*            pageToShow={<ServiceTypesPage />}*/}
-                                {/*        />*/}
-                                {/*    }*/}
-                                {/*/>*/}
+                                <Route
+                                    path="/clients"
+                                    element={
+                                        <PrivateRoute
+                                            allowedRoles={[ROLES.OWNER, ROLES.MANAGER]}
+                                            pageToShow={<ClientsPage/>}
+                                        />
+                                    }
+                                />
                             </Routes>
                         </div>
                     </main>

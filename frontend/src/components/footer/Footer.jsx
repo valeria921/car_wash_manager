@@ -1,15 +1,17 @@
+import "./style.css";
+
 const Footer = () => {
     return (
         <>
-            <footer className="footer">
-                <hr className="border-bottom" />
-                <p className="text-center">
+            <footer class="custom-footer">
+                <hr class="custom-footer__separator" />
+                <p class="custom-footer__text">
                     &copy; 2025 - Built by{" "}
                     <a
                         href="https://www.linkedin.com/in/valeria-kruk"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-decoration-none text-body"
+                        class="custom-footer__link"
                     >
                         Valeria Kruk
                     </a>

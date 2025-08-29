@@ -34,8 +34,8 @@ const TableBasic = ({
                 <h2>{tableName}</h2>
             </div>
             <div class="table-container">
-                <table className="custom-table">
-                    <thead className="custom-table__head">
+                <table class="custom-table">
+                    <thead class="custom-table__head">
                         <tr>
                             {columnNames.map((eachRow, index) => {
                                 return <th key={index}>{eachRow.name}</th>;

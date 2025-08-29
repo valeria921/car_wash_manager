@@ -1,0 +1,35 @@
+/*   Input type   */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-bottom: 20px;
+}
+
+.form-label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: 300;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: #153250;
+  box-shadow: 0 0 0 3px rgba(21, 50, 80, 0.1);
+}
+
+
+/*   Select type   */
+
+

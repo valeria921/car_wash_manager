@@ -1,11 +1,19 @@
-const FormInput = ({ name, value, onChange, type = "text" }) => (
+import "./style.css";
+
+const FormInput = ({ label, name, value, onChange, type = "text" }) => (
+  <div className="form-group">
+    <label htmlFor={name} className="form-label">
+      {label}
+    </label>
     <input
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        style={{ padding: "0.5rem", width: "100%" }}
+      type={type}
+      id={name}
+      name={name}
+      value={value}
+      onChange={onChange}
+      className="form-input"
     />
+  </div>
 );
 
 export default FormInput;

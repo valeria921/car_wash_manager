@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ROLES, STORAGE_KEYS } from "../../constants";
-import TableBasic from "../../components/tables/TableBasic";
-import TableWithUpdate from "../../components/tables/TableWithUpdate";
-import FormDatePicker from "../../components/forms/formFields/FormDatePicker";
-import CreateUpdateForm, { INPUT_TYPES } from "../../components/forms/CreateUpdateForm";
-import ButtonBasic, { BUTTON_TYPES } from "../../components/buttons/ButtonBasic";
 import { useDispatch, useSelector } from "react-redux";
 import { servicesActions, serviceTypesActions, skillsActions } from "../../redux/actions";
+
+import { ROLES, STORAGE_KEYS } from "../../constants";
+
+import TableBasic from "../../components/tables/TableBasic";
+import TableWithUpdate from "../../components/tables/TableWithUpdate";
+import CreateUpdateForm, { INPUT_TYPES } from "../../components/forms/CreateUpdateForm";
+import ButtonBasic, { BUTTON_TYPES } from "../../components/buttons/ButtonBasic";
+
 import "./style.css";
 import "../main.css";
 
@@ -160,6 +162,7 @@ function ServicesPage() {
                     name: "Delete",
                     onClick: () => handleDeleteServiceType(serviceTypeId),
                     buttonType: BUTTON_TYPES.SECONDARY,
+                    buttonAction: "Delete"
                 },
             ];
         }
@@ -275,7 +278,7 @@ function ServicesPage() {
             {userRole === ROLES.OWNER && (
                 <ButtonBasic
                     buttonType={BUTTON_TYPES.SUCCESS}
-                    extraStyles={{ fontSize: "18px" }}
+                    extraClasses={"bigButton spaceBottom"}
                     onClick={handleNewService}
                 >
                     + New service
@@ -293,12 +296,6 @@ function ServicesPage() {
                 }}
                 onDelete={(id) => handleDeleteServiceType(id)}
             />
-            <TableBasic
-                tableName="All service types"
-                columnNames={[{ name: "Service type" }, { name: "Actions" }]}
-                rows={getServiceTypeModifiedTableData()}
-                rowKeysToRender={["service_type_name"]}
-            />
 
             {(formMode === FORM_MODES.CREATE_SERVICE_TYPE ||
                 formMode === FORM_MODES.EDIT_SERVICE_TYPE) && (
@@ -309,12 +306,14 @@ function ServicesPage() {
                 />
             )}
             {userRole === ROLES.OWNER && (
-                <button className="btn btn-success mt-1 mb-5" onClick={handleNewServiceType}>
+                <ButtonBasic
+                    buttonType={BUTTON_TYPES.SUCCESS}
+                    extraClasses={"bigButton"}
+                    onClick={handleNewServiceType}
+                >
                     + New service type
-                </button>
+                </ButtonBasic>
             )}
-
-            <FormDatePicker />
         </div>
     );
 }

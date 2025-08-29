@@ -1,10 +1,7 @@
+import "./style.css";
+
 const FormSelect = ({ name, value, onChange, options }) => (
-    <select
-        name={name}
-        value={value}
-        onChange={onChange}
-        style={{ padding: "0.5rem", width: "100%" }}
-    >
+    <select class="form-select" name={name} value={value} onChange={onChange}>
         <option value="">Select...</option>
         {options.map((opt) => (
             <option key={opt.id} value={opt.id}>

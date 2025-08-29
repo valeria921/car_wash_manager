@@ -83,26 +83,13 @@ const TableWithUpdate = ({
 
     function handleDelete(index) {
         const updateEnabled = updateEnabledRows.includes(index);
+        console.log(rowValues[index]);
         if (!updateEnabled) {
             return onDelete(rowValues[index].id);
         }
         if (updateEnabled) {
             return setUpdateEnabledRows([...updateEnabledRows].filter((each) => each !== index));
         }
-    }
-
-    function getButtons(index) {
-        const updateEnabled = updateEnabledRows.includes(index);
-        return [
-            {
-                name: updateEnabled ? "Save" : "Update",
-                onClick: handleUpdate,
-            },
-            {
-                name: updateEnabled ? "Cancel" : "Delete",
-                onClick: handleDelete,
-            },
-        ];
     }
 
     function renderRow(eachRow, eachKey, rowIndex) {
@@ -127,12 +114,12 @@ const TableWithUpdate = ({
 
     return (
         <>
-            <div className="d-flex justify-content-between align-items-center mb-3">
+            <div class="table-header">
                 <h2>{tableName}</h2>
             </div>
-            <div className="table-responsive">
-                <table className="table table-striped table-hover">
-                    <thead className="table-dark">
+            <div class="table-container">
+                <table class="custom-table">
+                    <thead class="custom-table__head">
                         <tr>
                             {columnNames.map((eachColumn, index) => {
                                 return <th key={index}>{eachColumn.name}</th>;
@@ -151,24 +138,32 @@ const TableWithUpdate = ({
                                         );
                                     })}
                                     <td>
-                                        {getButtons(rowIndex).map((eachButton, index) => {
+                                        {eachRow.buttons.map((eachButton, index) => {
+                                            const updateEnabled =
+                                                updateEnabledRows.includes(rowIndex);
+                                            const isDeleteButton =
+                                                eachButton?.buttonAction === "Delete";
+                                            function decideOnClick() {
+                                                if (isDeleteButton) {
+                                                    return handleDelete(rowIndex);
+                                                }
+                                                return handleUpdate(rowIndex);
+                                            }
+
+                                            function getButtonName() {
+                                                if (updateEnabled) {
+                                                    return isDeleteButton ? "Cancel" : "Save";
+                                                }
+                                                return eachButton.name;
+                                            }
                                             return (
-                                                <div>
-                                                    <button
-                                                        key={index}
-                                                        className={eachButton.className}
-                                                        onClick={() => eachButton.onClick(rowIndex)}
-                                                    >
-                                                        {eachButton.name}
-                                                    </button>
-                                                    <ButtonBasic
-                                                        key={index}
-                                                        buttonType={eachButton.buttonType}
-                                                        onClick={eachButton.onClick}
-                                                    >
-                                                        {eachButton.name}
-                                                    </ButtonBasic>
-                                                </div>
+                                                <ButtonBasic
+                                                    key={index}
+                                                    buttonType={eachButton.buttonType}
+                                                    onClick={decideOnClick}
+                                                >
+                                                    {getButtonName()}
+                                                </ButtonBasic>
                                             );
                                         })}
                                     </td>

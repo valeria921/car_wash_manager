@@ -1,3 +1,5 @@
+import "./style.css";
+
 const FormDatePicker = ({ name, value, onChange, type = "date" }) => (
     <input
         type={type}

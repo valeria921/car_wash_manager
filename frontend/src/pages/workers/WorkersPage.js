@@ -161,13 +161,13 @@ function WorkersPage() {
             )}
 
             {userRole === ROLES.OWNER && (
-                    <ButtonBasic
-                        buttonType={BUTTON_TYPES.SUCCESS}
-                        extraStyles={{ fontSize: "18px" }}
-                        onClick={handleNewWorker}
-                    >
-                        + New Worker
-                    </ButtonBasic>
+                <ButtonBasic
+                    buttonType={BUTTON_TYPES.SUCCESS}
+                    extraClasses={"bigButton"}
+                    onClick={handleNewWorker}
+                >
+                    + New Worker
+                </ButtonBasic>
             )}
         </div>
     );

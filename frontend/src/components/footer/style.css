@@ -1,0 +1,25 @@
+.custom-footer {
+  padding: 50px 0;
+  text-align: center;
+  color: #000;
+}
+
+.custom-footer__separator {
+  border: none;
+  border-bottom: 1px solid #153250;
+  margin: 0 0 1rem 0;
+}
+
+.custom-footer__text {
+  margin: 0;
+  font-size: 16px;
+}
+
+.custom-footer__link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.custom-footer__link:hover {
+  text-decoration: underline;
+}

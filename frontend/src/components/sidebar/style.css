@@ -48,7 +48,6 @@
     margin-left: -8px;
 }
 
-/* Hover effect */
 .nav-block__item button:hover {
     outline: 0.5px solid #fefcff;
     border-radius: 3px;

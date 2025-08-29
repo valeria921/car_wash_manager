@@ -28,6 +28,12 @@ const SideNavBar = () => {
                     <div class="nav-block">
                         <ul>
                             <li class="nav-block__item">
+                                <button onClick={() => navigate("/orders")}>Manage Orders</button>
+                            </li>
+                            <li class="nav-block__item">
+                                <button onClick={() => navigate("/clients")}>Manage Clients</button>
+                            </li>
+                            <li class="nav-block__item">
                                 <button onClick={() => navigate("/workers")}>Manage Workers</button>
                             </li>
                             <li class="nav-block__item">
@@ -37,6 +43,15 @@ const SideNavBar = () => {
                                 <button onClick={() => navigate("/services")}>
                                     Manage Services
                                 </button>
+                            </li>
+                            <li class="nav-block__item">
+                                <button onClick={() => navigate("/costs")}>Manage Costs</button>
+                            </li>
+                            <li class="nav-block__item">
+                                <button onClick={() => navigate("/reports")}>Manage Salaries</button>
+                            </li>
+                            <li class="nav-block__item">
+                                <button onClick={() => navigate("/reports")}>Reports</button>
                             </li>
                         </ul>
                     </div>

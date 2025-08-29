@@ -26,12 +26,12 @@
 }
 
 .successButton {
-    background-color: #038C4C;
-    border: 1px solid #02733E;
+    background-color: #038c4c;
+    border: 1px solid #02733e;
 }
 
 .successButton:hover {
-    background-color: #02733E;
+    background-color: #02733e;
 }
 
 .dangerButton {

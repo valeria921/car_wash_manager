@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../redux/actions";
-import ButtonBasic from "../../components/buttons/ButtonBasic";
+import ButtonBasic, { BUTTON_TYPES } from "../../components/buttons/ButtonBasic";
 import "./style.css";
 
 function LoginPage() {
@@ -53,7 +53,11 @@ function LoginPage() {
                                 required
                             />
                         </div>
-                        <ButtonBasic buttonType="buttonSuccess" extraClasses="mb-3" type="submit">
+                        <ButtonBasic
+                            buttonType={BUTTON_TYPES.SUCCESS}
+                            extraClasses={"bigButton"}
+                            type="submit"
+                        >
                             Login
                         </ButtonBasic>
                     </form>

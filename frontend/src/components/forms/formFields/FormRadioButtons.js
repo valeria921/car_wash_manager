@@ -1,5 +1,6 @@
+import "./style.css";
+
 const FormRadioButtons = ({ name, value, onChange, options }) => {
-    console.log("value", value);
     return (
         <>
             {options.map((opt, index) => (
